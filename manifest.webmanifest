@@ -1,0 +1,15 @@
+{
+  "name": "Wild Peel Tonic",
+  "short_name": "Peel Tonic",
+  "description": "Perpetual fermented electrolyte drink from tea, cabbage brine and fruit peels.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F3F6F2",
+  "theme_color": "#1D6A51",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

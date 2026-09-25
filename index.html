@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wild Peel Tonic</title>
+<meta name="description" content="Perpetual fermented electrolyte drink from tea, cabbage brine and fruit peels.">
+<meta name="theme-color" content="#1D6A51">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root{
+  --bg:#F3F6F2; --surface:#FFFFFF; --tint:#E5EEE8; --ink:#17221D; --muted:#55645C; --line:#D5DED8;
+  --accent:#1D6A51; --accent-ink:#FFFFFF; --amber:#9A5A17;
+  --good:#2E7A4D; --good-bg:#E3F1E8; --warn:#8F6310; --warn-bg:#F7EDD6; --bad:#AE3A2F; --bad-bg:#F8E3E0;
+  --ph1:#C72E4E; --ph2:#D8659A; --ph3:#8C4FB0; --ph4:#3B6DCC; --ph5:#2B9A6B;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]):not([data-theme="sepia"]){
+    color-scheme:dark;
+    --bg:#101713; --surface:#17201B; --tint:#1C2A23; --ink:#E4ECE7; --muted:#9AABA2; --line:#2A3730;
+    --accent:#5BC19A; --accent-ink:#0D1A14; --amber:#E2A35C;
+    --good:#6CCB92; --good-bg:#18301F; --warn:#E3B558; --warn-bg:#2E2614; --bad:#F08A7E; --bad-bg:#351C19;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#101713; --surface:#17201B; --tint:#1C2A23; --ink:#E4ECE7; --muted:#9AABA2; --line:#2A3730;
+  --accent:#5BC19A; --accent-ink:#0D1A14; --amber:#E2A35C;
+  --good:#6CCB92; --good-bg:#18301F; --warn:#E3B558; --warn-bg:#2E2614; --bad:#F08A7E; --bad-bg:#351C19;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{font-size:var(--fs,16px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.6;padding-inline:16px;padding-block:0 64px}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.4rem,8vw,3.8rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.55rem,4.5vw,2rem);font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+.label{font-family:var(--mono);font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.qty{font-family:var(--mono);font-weight:500;color:var(--amber);white-space:nowrap}
+.muted{color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:14px}
+
+/* header */
+header.hero{padding-block:40px 28px;display:flex;flex-direction:column;gap:16px}
+.strip{display:grid;grid-template-columns:repeat(5,1fr);height:10px;border-radius:5px;overflow:hidden;max-width:260px}
+.strip span:nth-child(1){background:var(--ph1)}.strip span:nth-child(2){background:var(--ph2)}.strip span:nth-child(3){background:var(--ph3)}.strip span:nth-child(4){background:var(--ph4)}.strip span:nth-child(5){background:var(--ph5)}
+.lede{font-size:1.15rem;max-width:60ch;color:var(--muted)}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:6px}
+.facts div{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.facts b{font-family:var(--display);font-size:1.35rem;font-variant-numeric:tabular-nums}
+.facts span{font-size:.85rem;color:var(--muted);line-height:1.3}
+@media (max-width:600px){.facts{grid-template-columns:repeat(2,1fr)}}
+
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-inline:-16px;padding:10px 16px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+nav.toc::-webkit-scrollbar{display:none}
+nav.toc a{flex:none;text-decoration:none;color:var(--ink);font-size:.88rem;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
+
+section{padding-block:44px 0;display:flex;flex-direction:column;gap:18px;scroll-margin-top:60px}
+section > header{display:flex;flex-direction:column;gap:6px}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.note{background:var(--tint);border-radius:12px;padding:14px 16px;font-size:.96rem}
+.note.warn{background:var(--warn-bg)}
+.note.warn strong{color:var(--warn)}
+
+ul.clean{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+ul.clean li{padding-left:18px;position:relative}
+ul.clean li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+
+/* ingredient list */
+.ing{display:flex;flex-direction:column}
+.ing div{display:grid;grid-template-columns:7.5rem 1fr;gap:12px;padding-block:10px;border-bottom:1px dashed var(--line)}
+.ing div:last-child{border-bottom:0}
+@media (max-width:480px){.ing div{grid-template-columns:1fr;gap:0}}
+
+/* steps */
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:0;display:flex;flex-direction:column;gap:0}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:2.4rem 1fr;gap:12px;padding-block:12px;border-top:1px solid var(--line)}
+ol.steps li:first-child{border-top:0}
+ol.steps li::before{content:counter(s);font-family:var(--display);font-weight:800;font-size:1.3rem;color:var(--accent);width:2.2rem;height:2.2rem;border:2px solid var(--accent);border-radius:50%;display:grid;place-items:center;line-height:1}
+ol.steps b{display:block}
+
+/* scaler */
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:inherit;font-family:var(--mono);font-size:.9rem;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.feed{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.feed div{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;background:var(--bg)}
+.feed b{font-family:var(--mono);font-weight:500;font-size:1.05rem;color:var(--amber);font-variant-numeric:tabular-nums}
+.feed span{font-size:.85rem;color:var(--muted)}
+
+/* flavor grid */
+.combos{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.combo{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.combo dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:.93rem}
+.combo dt{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:.25em}
+.combo dd{margin:0}
+.fizz{font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+.fizz i{font-style:normal;color:var(--amber);letter-spacing:.1em}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:.94rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--tint)}
+td:first-child{font-weight:700}
+
+/* yeast verdicts */
+.verdicts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.verdict{border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);background:var(--surface)}
+.pill{align-self:flex-start;font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px}
+.pill.good{background:var(--good-bg);color:var(--good)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.pill.bad{background:var(--bad-bg);color:var(--bad)}
+
+/* pH scale */
+.phscale{display:flex;flex-direction:column;gap:8px}
+.phbar{display:grid;grid-template-columns:repeat(5,1fr);border-radius:10px;overflow:hidden;height:46px}
+.phbar span{display:grid;place-items:center;color:#fff;font-family:var(--mono);font-size:.78rem;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.phbar span:nth-child(1){background:var(--ph1)}.phbar span:nth-child(2){background:var(--ph2)}.phbar span:nth-child(3){background:var(--ph3)}.phbar span:nth-child(4){background:var(--ph4)}.phbar span:nth-child(5){background:var(--ph5)}
+.phkey{display:grid;grid-template-columns:repeat(5,1fr);font-size:.8rem;line-height:1.3;gap:4px}
+.phkey span:nth-child(-n+2){color:var(--good);font-weight:700}
+.phkey span:nth-child(3){color:var(--warn);font-weight:700}
+.phkey span:nth-child(n+4){color:var(--bad);font-weight:700}
+
+/* trouble list */
+.trouble{display:flex;flex-direction:column;gap:10px}
+.tr{display:grid;grid-template-columns:5.6rem 1fr;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.tr .pill{margin-top:2px}
+.tr h3{font-size:1rem;margin-bottom:2px}
+.tr p{font-size:.94rem;color:var(--muted)}
+@media (max-width:480px){.tr{grid-template-columns:1fr;gap:6px}}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:620px){.two{grid-template-columns:1fr}}
+
+/* sepia theme */
+:root[data-theme="sepia"]{
+  color-scheme:light;
+  --bg:#F2E8D8; --surface:#F8F0E3; --tint:#E9DCC6; --ink:#3A2E22; --muted:#6E5D4B; --line:#DCCBB2;
+  --accent:#6B4A1F; --accent-ink:#FFF8EC; --amber:#8A4F14;
+  --good:#3F6B2E; --good-bg:#E4E3C8; --warn:#85600F; --warn-bg:#EEDDB8; --bad:#9C3A26; --bad-bg:#F0D6C8;
+}
+/* reader controls */
+.aa{flex:none;margin-left:auto;font:inherit;font-family:var(--display);font-weight:700;font-size:.95rem;padding:6px 14px;border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);cursor:pointer}
+.aa:focus-visible,.rp button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.rp{position:sticky;top:calc(env(safe-area-inset-top,0px) + 52px);z-index:6;margin-top:10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.rp .row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;justify-content:space-between}
+.rp .seg button{font-family:var(--body)}
+.rp .size{font-family:var(--mono);font-variant-numeric:tabular-nums;min-width:3.2em;text-align:center}
+/* reading mode */
+:root.reading .wrap{max-width:660px}
+:root.reading body{line-height:1.75}
+:root.reading .strip,:root.reading .facts{display:none}
+:root.reading .panel,:root.reading .combo,:root.reading .verdict,:root.reading .tr{background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0;padding-inline:0}
+:root.reading .combos,:root.reading .verdicts,:root.reading .two{grid-template-columns:1fr;gap:0}
+:root.reading .note{border-radius:0;background:transparent;border-left:3px solid var(--accent);padding-block:4px}
+:root.reading .note.warn{border-left-color:var(--warn)}
+:root.reading .tr{grid-template-columns:1fr;gap:6px}
+:root.reading .tr p{color:var(--ink)}
+:root.reading section{padding-block:56px 0}
+/* print */
+@media print{
+  :root,:root[data-theme]{color-scheme:light;
+    --bg:#fff; --surface:#fff; --tint:#F1F4F2; --ink:#111; --muted:#444; --line:#CCC;
+    --accent:#1D6A51; --amber:#7A4510; --good:#1F5E38; --good-bg:#fff; --warn:#6E4B08; --warn-bg:#fff; --bad:#8E2A21; --bad-bg:#fff;
+    --fs:11pt}
+  @page{margin:14mm}
+  body{padding:0;font-size:10.5pt;line-height:1.45}
+  .wrap{max-width:none}
+  nav.toc,.rp,.aa,.seg,.strip{display:none!important}
+  header.hero{padding-block:0 12px}
+  h1{font-size:26pt}
+  section{padding-block:18px 0;gap:10px}
+  h2{break-after:avoid}
+  .panel,.combo,.verdict,.tr,.note,.tbl,tr,ol.steps li,.facts,.phscale{break-inside:avoid}
+  .panel,.combo,.verdict,.tr,.tbl,.facts{box-shadow:none}
+  .note{border:1px solid var(--line)}
+  .pill{border:1px solid currentColor}
+  table{min-width:0}
+  .tbl{overflow:visible}
+  a{color:inherit;text-decoration:none}
+  .phbar span,.phbar,.strip span{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #trouble{break-before:page}
+}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:.88rem;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="strip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <span class="label">Perpetual home brew · version 2</span>
+  <h1>Wild Peel Tonic</h1>
+  <p class="lede">A fizzy, tart electrolyte drink for training. Made from black tea, cabbage brine and whatever fruit peels you have, it runs in one 5-liter jar and gives you a liter a day.</p>
+  <div class="facts">
+    <div><b>4 L</b><span>brewing in the 5 L jar</span></div>
+    <div><b>1 L/day</b><span>harvest and feed back</span></div>
+    <div><b>~600 mg</b><span>sodium per liter</span></div>
+    <div><b>Pink</b><span>on the red-cabbage test before drinking</span></div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <a href="#start">Start</a><a href="#daily">Daily cycle</a><a href="#flavors">Flavors</a><a href="#options">Swaps</a><a href="#yeast">Yeast?</a><a href="#kefir">Kefir drinks</a><a href="#workout">Workout</a><a href="#test">pH test</a><a href="#trouble">Troubleshooting</a><button type="button" class="aa" id="aa" aria-expanded="false" aria-controls="rp">Aa Read</button>
+</nav>
+<div class="rp" id="rp" hidden>
+  <div class="row"><strong>Reading mode</strong><div class="seg"><button type="button" id="rm-off" data-rm="0">Off</button><button type="button" id="rm-on" data-rm="1">On</button></div></div>
+  <div class="row"><strong>Text size</strong><div class="seg"><button type="button" id="fs-down" aria-label="Smaller text">A−</button><span class="size" id="fs-val">100%</span><button type="button" id="fs-up" aria-label="Larger text">A+</button></div></div>
+  <div class="row"><strong>Theme</strong><div class="seg"><button type="button" id="th-auto" data-th="auto">Auto</button><button type="button" id="th-light" data-th="light">Light</button><button type="button" id="th-sepia" data-th="sepia">Sepia</button><button type="button" id="th-dark" data-th="dark">Dark</button></div></div>
+</div>
+
+<section id="changes">
+  <header><span class="label">What's new in v2</span><h2>Changes from the first version</h2></header>
+  <ul class="clean">
+    <li><strong>Brew 4 L, not 2 L.</strong> Taking out 1 L of 4 L a day (25%) keeps the culture and the acidity steady. Taking 1 L of 2 L halved them every day.</li>
+    <li><strong>Salt and vinegar go into every feed.</strong> Salt keeps the sodium level steady instead of fading out within a week. Vinegar keeps the brew acidic, which is what keeps it safe.</li>
+    <li><strong>Red-cabbage pH test</strong> in place of pH strips. You can make it from one cabbage leaf.</li>
+    <li><strong>Brew the feed tea as a concentrate</strong> so it's cool enough to add right away.</li>
+    <li><strong>Refrigerate bottles when firm, not rock-hard,</strong> so they don't gush when opened.</li>
+    <li><strong>Choose any peels.</strong> Apple, pineapple, ginger and more are in the flavor section. Mango peel now has a warning.</li>
+  </ul>
+</section>
+
+<section id="gear">
+  <header><span class="label">Equipment</span><h2>What you need</h2></header>
+  <div class="two">
+    <div class="panel stack">
+      <h3>Brewing</h3>
+      <ul class="clean">
+        <li>5 L protein-powder jar, washed well. Replace it once the inside is scratched or cloudy.</li>
+        <li>Fine strainer and a funnel</li>
+        <li>Long spoon or tongs used only for the brew</li>
+        <li>Small pot or kettle for the tea concentrate</li>
+      </ul>
+    </div>
+    <div class="panel stack">
+      <h3>Bottling</h3>
+      <ul class="clean">
+        <li>Plastic <em>soda</em> bottles, 500 mL–1 L. Bottles made for fizzy drinks handle pressure better than thin water bottles.</li>
+        <li>A small jar of red-cabbage test liquid (see <a href="#test">pH test</a>)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <header><span class="label">Day 0 · once</span><h2>Starter batch (4 liters)</h2></header>
+  <div class="panel ing">
+    <div><span class="qty">3.5 L</span><span>water</span></div>
+    <div><span class="qty">7 bags</span><span>black tea</span></div>
+    <div><span class="qty">4 tbsp</span><span>white sugar (about 50 g)</span></div>
+    <div><span class="qty">500 mL</span><span>live cabbage brine, from homemade or refrigerated unpasteurized sauerkraut. Shelf-stable jars are pasteurized, so the bacteria in them are dead.</span></div>
+    <div><span class="qty">4 tbsp</span><span>sugarcane vinegar, 4–5% acidity (¼ cup)</span></div>
+    <div><span class="qty">1 set</span><span>peels from a <a href="#flavors">flavor combo</a></span></div>
+  </div>
+  <p class="muted">No extra salt in the starter. The brine provides about 1 g of sodium per liter at the start, and this settles to about 600 mg once the daily feeds take over.</p>
+  <ol class="steps">
+    <li><div><b>Make a concentrate.</b> Steep the tea bags in 1 L of boiling water for 5–10 minutes. Remove the bags and stir in the sugar until it dissolves.</div></li>
+    <li><div><b>Cool it.</b> Add 2.5 L of cold water. Check the temperature with a clean finger. It should feel cool or barely lukewarm, below 30 °C, because heat kills the culture.</div></li>
+    <li><div><b>Start the culture.</b> Pour everything into the jar: tea, brine, vinegar and peels.</div></li>
+    <li><div><b>Loose lid.</b> Screw the lid on, then back it off a quarter turn so gas can escape. Keep it out of the sun, ideally at 20–26 °C.</div></li>
+    <li><div><b>Wait 2–4 days.</b> It's ready when it tastes clearly tart, about like lemonade, and turns the test liquid pink. Small bubbles and cloudiness are normal. Then start the daily cycle.</div></li>
+  </ol>
+</section>
+
+<section id="daily">
+  <header><span class="label">Every day</span><h2>The daily cycle</h2></header>
+  <ol class="steps">
+    <li><div><b>Taste and test.</b> The brew should taste tart and turn the test liquid pink. If it's purple, skip today's harvest and see <a href="#trouble">Troubleshooting</a>.</div></li>
+    <li><div><b>Harvest 1 L.</b> Pour it through the strainer with clean hands and a clean funnel.</div></li>
+    <li><div><b>Bottle it.</b> Leave about 6 cm (2.5 in) of headspace. Add <a href="#flavors">bottle add-ins</a> if you like. For more fizz, add ½ tsp sugar per 500 mL.</div></li>
+    <li><div><b>Feed the jar right away</b> using the amounts below.</div></li>
+    <li><div><b>Squeeze and chill.</b> Cap the bottles tight and leave them on the counter. Squeeze them a few times a day. Move them to the fridge when they feel <em>firm</em> with only slight give, usually after 12–36 hours. Drink within a week and open slowly over the sink.</div></li>
+  </ol>
+
+  <div class="panel stack">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center">
+      <h3>Daily feed</h3>
+      <div class="seg" role="group" aria-label="Liters harvested">
+        <button type="button" id="l05" data-l="0.5">0.5 L</button>
+        <button type="button" id="l1" data-l="1" aria-pressed="true">1 L</button>
+        <button type="button" id="l15" data-l="1.5">1.5 L</button>
+        <button type="button" id="l2" data-l="2">2 L</button>
+      </div>
+    </div>
+    <div class="feed" id="feed"></div>
+    <p class="muted" style="font-size:.93rem">Steep the tea bags in the hot water for 5 minutes, then stir in the sugar and salt. Remove the bags and add the cold water. The mix is cool enough to pour in right away. Use 2 tbsp of vinegar per liter if the brew tasted flat or the test looked purple.</p>
+  </div>
+
+  <div class="two">
+    <div class="panel stack">
+      <span class="label">Every 4–7 days</span>
+      <h3>Swap the peels</h3>
+      <p>Remove soft or pale peels with the clean spoon and add fresh ones. Take pineapple skins out after 3 days because they ferment strongly.</p>
+    </div>
+    <div class="panel stack">
+      <span class="label">When it slows</span>
+      <h3>Add more brine</h3>
+      <p>If bottles take more than 48 hours to firm up, stir in <span class="qty">100–150 mL</span> of fresh cabbage brine.</p>
+    </div>
+    <div class="panel stack">
+      <span class="label">Monthly</span>
+      <h3>Reset the jar</h3>
+      <p>Save 1 L of brew. Wash the jar with hot soapy water and rinse it well. Restart with the saved liter plus 3 L of fresh sweet tea, 2 tbsp vinegar, ½ tsp salt and fresh peels.</p>
+    </div>
+    <div class="panel stack">
+      <span class="label">Going away</span>
+      <h3>Pause it</h3>
+      <p>Feed it, tighten the lid and put the jar in the fridge for up to 2 weeks. Let it warm up for a day before your next harvest.</p>
+    </div>
+  </div>
+</section>
+
+<section id="flavors">
+  <header><span class="label">Flavor menu</span><h2>Choose your peels</h2>
+    <p class="muted">Peels in the jar carry wild yeast and set the base flavor. Bottle add-ins go into each bottle and give a fresher taste and extra fizz. Put fresh herbs in bottles only, because they rot in the jar.</p></header>
+  <div class="combos">
+    <article class="combo"><h3>Citrus Classic</h3><p class="fizz">fizz <i>●●○○</i></p><dl><dt>Jar</dt><dd>1–2 mandarin or orange peels, 3 lemon zest strips (no white pith)</dd><dt>Bottle</dt><dd>Squeeze of lemon</dd></dl></article>
+    <article class="combo"><h3>Orchard</h3><p class="fizz">fizz <i>●●●○</i></p><dl><dt>Jar</dt><dd>Peel and core of 1 apple, 1 cinnamon stick</dd><dt>Bottle</dt><dd>1 tbsp apple juice</dd></dl></article>
+    <article class="combo"><h3>Tepache</h3><p class="fizz">fizz <i>●●●●</i></p><dl><dt>Jar</dt><dd>Skin of ¼ pineapple, 1 clove, 3 slices of ginger. Take the skin out after 3 days.</dd><dt>Bottle</dt><dd>1 tbsp pineapple juice</dd></dl></article>
+    <article class="combo"><h3>Ginger Zinger</h3><p class="fizz">fizz <i>●●●○</i></p><dl><dt>Jar</dt><dd>5 thin coins of fresh ginger, 2 lemon zest strips</dd><dt>Bottle</dt><dd>1 extra ginger slice, ½ tsp honey. Easy on the stomach during training.</dd></dl></article>
+    <article class="combo"><h3>Garden Cooler</h3><p class="fizz">fizz <i>●●○○</i></p><dl><dt>Jar</dt><dd>Lime zest strips, peel of ½ cucumber</dd><dt>Bottle</dt><dd>3 mint leaves, 2 cucumber slices</dd></dl></article>
+    <article class="combo"><h3>Berry Red</h3><p class="fizz">fizz <i>●●●○</i></p><dl><dt>Jar</dt><dd>A handful of red grapes, lightly crushed, or apple peel</dd><dt>Bottle</dt><dd>3 frozen berries or a pinch of dried hibiscus. Keep hibiscus out of the jar, because its red color ruins the pH test.</dd></dl></article>
+    <article class="combo"><h3>Pear & Spice</h3><p class="fizz">fizz <i>●●○○</i></p><dl><dt>Jar</dt><dd>Peel of 1–2 pears, 2 cardamom pods, cracked</dd><dt>Bottle</dt><dd>Small pinch of cinnamon</dd></dl></article>
+    <article class="combo"><h3>Tropical (original)</h3><p class="fizz">fizz <i>●●○○</i></p><dl><dt>Jar</dt><dd>Mango peel, 1 mandarin peel, lemon zest</dd><dt>Bottle</dt><dd>1 tbsp mango purée</dd></dl><p class="muted" style="font-size:.85rem">Mango skin contains urushiol, the irritant in poison ivy. Skip it if mango skin or poison ivy makes your skin react.</p></article>
+  </div>
+  <div class="note warn"><strong>Keep these out of the jar:</strong> moldy or bruised fruit, waxed citrus unless scrubbed in hot water (buy organic if you can), crushed fruit pits or seeds, rhubarb leaves, and anything sprayed or from the roadside.</div>
+</section>
+
+<section id="options">
+  <header><span class="label">Swaps</span><h2>Tea, sugar and electrolyte options</h2></header>
+  <div class="tbl"><table>
+    <thead><tr><th>Ingredient</th><th>Option</th><th>How to use it</th></tr></thead>
+    <tbody>
+      <tr><td>Tea</td><td>Black (default)</td><td>Tea feeds the microbes and gives the drink body. 2 bags per liter is about 80–100 mg caffeine, the same as 2 cups of tea.</td></tr>
+      <tr><td></td><td>Green</td><td>Lighter and grassier. Use the same amount.</td></tr>
+      <tr><td></td><td>Rooibos</td><td>Caffeine-free, for evening training. Keep at least 1 black or green bag per liter so the culture gets enough nutrients.</td></tr>
+      <tr><td>Sugar</td><td>White (default)</td><td>Cleanest taste and ferments most predictably.</td></tr>
+      <tr><td></td><td>Brown or raw cane</td><td>Caramel flavor and trace minerals. Use the same amount.</td></tr>
+      <tr><td></td><td>Honey</td><td>Use 1 tbsp in place of 1 tbsp sugar. Raw honey ferments more slowly.</td></tr>
+      <tr><td></td><td>Fruit juice</td><td>100 mL apple or grape juice replaces about 1 tbsp sugar.</td></tr>
+      <tr><td></td><td>Blackstrap molasses</td><td>No more than 1 tsp per liter. Strong flavor, but it adds potassium.</td></tr>
+      <tr><td>Sodium</td><td>Salt ¼ tsp/L (default)</td><td>About 590 mg sodium per liter, inside the usual sports-drink range of 460–1150 mg/L. Use up to ½ tsp on very hot days or if you sweat heavily.</td></tr>
+      <tr><td>Potassium</td><td>Coconut water</td><td>Use 200 mL in place of water at bottling (not in the jar) for about +450 mg potassium. It also adds fizz.</td></tr>
+      <tr><td></td><td>Salt substitute (KCl)</td><td>A pinch, no more than ⅛ tsp per liter, gives about +400 mg potassium. <strong>Skip it</strong> if you have kidney problems or take blood-pressure medication.</td></tr>
+      <tr><td>Magnesium</td><td>Skip</td><td>You get enough from food. Epsom salt works as a laxative, so keep it out.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="yeast">
+  <header><span class="label">Your question</span><h2>Should I add brewer's yeast?</h2>
+    <p class="muted">Not as a regular step. The fruit skins already carry wild yeast. Here's what each kind of yeast does:</p></header>
+  <div class="verdicts">
+    <div class="verdict"><span class="pill warn">Won't ferment</span><h3>Brewer's / nutritional yeast flakes</h3><p>The yeast is dead. It adds B vitamins and a savory yeasty taste but no fizz. If you want the nutrition, stir it into food.</p></div>
+    <div class="verdict"><span class="pill bad">Avoid in the jar</span><h3>Active dry, baker's or beer yeast</h3><p>It crowds out the wild culture. The brew turns beery and less sour, makes more alcohol, and bottles can turn hard in a few hours.</p></div>
+    <div class="verdict"><span class="pill good">Better boost</span><h3>Fresh skins, brine, warmth</h3><p>Apple, grape and pineapple skins are full of wild yeast. Add fresh brine and move the jar somewhere at 24–26 °C.</p></div>
+  </div>
+  <div class="note"><strong>Only use it as a rescue.</strong> If bottles won't firm up after 3 days somewhere warm, add 3–4 grains of dry yeast to one bottle and check it every 2–3 hours.<br><strong>About alcohol:</strong> wild fermentation always makes a little. Fresh harvests usually stay under about 1%, but bottles left warm for a long time get stronger.</div>
+</section>
+
+<section id="kefir">
+  <header><span class="label">Kefir pairings</span><h2>Kefir sports drinks</h2>
+    <p class="muted">Salted fermented-milk drinks like ayran and doogh are traditional thirst quenchers. Kefir plus your tonic makes a tangy, fizzy recovery drink with protein.</p></header>
+  <div class="note"><strong>Two rules:</strong> Keep kefir and kefir grains out of the jar. Milk grains need milk, and dairy spoils a perpetual brew. Mix in the glass and drink the same day. Never seal kefir mixes in a bottle to build fizz.</div>
+  <div class="combos">
+    <article class="combo"><span class="label">Post-workout</span><h3>Classic Ayran</h3><dl><dt>Mix</dt><dd>250 mL kefir, 200 mL cold water or flat tonic, ⅛ tsp salt, 4 mint leaves</dd><dt>How</dt><dd>Shake or blend until frothy</dd></dl><p class="fizz">~9 g protein · ~400 mg sodium</p></article>
+    <article class="combo"><span class="label">Post-workout</span><h3>Fizzy Doogh</h3><dl><dt>Mix</dt><dd>250 mL kefir, 250 mL chilled fizzy tonic (Citrus or Ginger works best), pinch of dried mint, pinch of salt</dd><dt>How</dt><dd>Pour the tonic slowly into the kefir, because it foams a lot</dd></dl><p class="fizz">Light and sparkling</p></article>
+    <article class="combo"><span class="label">Long sessions</span><h3>Recovery Lassi</h3><dl><dt>Mix</dt><dd>250 mL kefir, 150 mL tonic, ½ banana or a handful of berries, 1 tsp honey</dd><dt>How</dt><dd>Blend</dd></dl><p class="fizz">More carbs for refueling</p></article>
+  </div>
+  <div class="panel stack">
+    <h3>Kefir whey as a starter</h3>
+    <p>No sauerkraut? Strain kefir through a cloth in the fridge overnight. Use <span class="qty">250 mL</span> of the yellowish whey in place of the 500 mL cabbage brine, and add <span class="qty">1 tsp</span> of salt to the starter batch, since whey has no salt. The thick part left in the cloth is kefir cheese.</p>
+  </div>
+</section>
+
+<section id="workout">
+  <header><span class="label">Drinking it</span><h2>Training plan</h2></header>
+  <div class="tbl"><table>
+    <thead><tr><th>When</th><th>What</th><th>How much</th></tr></thead>
+    <tbody>
+      <tr><td>30 min before</td><td>Tonic, chilled</td><td>200–300 mL</td></tr>
+      <tr><td>During</td><td>Tonic. Leave dairy out during hard efforts.</td><td>150–250 mL every 15–20 min in sessions over 45 min</td></tr>
+      <tr><td>Within 1 hour after</td><td>Ayran, Doogh or Lassi</td><td>One glass, about 450–500 mL</td></tr>
+      <tr><td>Hot days</td><td>Tonic with ½ tsp salt per liter</td><td>Drink to thirst</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note warn"><strong>Check with a doctor first</strong> if you're pregnant, immunocompromised, on a low-sodium diet, have kidney disease, or take blood-pressure medication.</div>
+</section>
+
+<section id="test">
+  <header><span class="label">No strips needed</span><h2>Red-cabbage pH test</h2>
+    <p class="muted">Red cabbage juice changes color with acidity. Low pH is what keeps a wild ferment safe.</p></header>
+  <ol class="steps">
+    <li><div><b>Make the indicator.</b> Chop 2–3 red cabbage leaves and pour a cup of boiling water over them. After 10 minutes, strain the purple liquid into a jar. It keeps about a week in the fridge.</div></li>
+    <li><div><b>Set up references.</b> In three white cups, add 1 tbsp water, 1 tbsp vinegar and 1 tbsp of your brew.</div></li>
+    <li><div><b>Add 1 tbsp of indicator to each cup</b> and compare. Your brew should look close to the vinegar cup and clearly different from the water cup.</div></li>
+  </ol>
+  <div class="phscale" role="img" aria-label="Red cabbage color scale: red and pink mean acidic and safe; purple means not acidic enough; blue or green means discard">
+    <div class="phbar"><span>red</span><span>pink</span><span>purple</span><span>blue</span><span>green</span></div>
+    <div class="phkey"><span>pH 2–3<br>ready</span><span>pH 3–4<br>ready</span><span>pH 5–7<br>not yet</span><span>pH 8+<br>discard</span><span>pH 10+<br>discard</span></div>
+  </div>
+</section>
+
+<section id="trouble">
+  <header><span class="label">Troubleshooting & safety</span><h2>Mold or yeast? What to look for</h2></header>
+  <div class="trouble">
+    <div class="tr"><span class="pill good">Normal</span><div><h3>Brown strings or sediment on the bottom</h3><p>This is yeast. It's harmless. Leave it or strain it out.</p></div></div>
+    <div class="tr"><span class="pill good">Normal</span><div><h3>Smooth, clear jelly disc on top</h3><p>This is cellulose from vinegar bacteria, a baby SCOBY. It's harmless. Remove it or leave it.</p></div></div>
+    <div class="tr"><span class="pill warn">Fix</span><div><h3>Flat white or cream film, wrinkled or powdery</h3><p>This is kahm yeast, which is harmless but tastes stale. Skim it off, add 1 tbsp vinegar per liter and harvest more often.</p></div></div>
+    <div class="tr"><span class="pill warn">Fix</span><div><h3>Tastes like sweet tea after 3 days, or the test looks purple</h3><p>Stir in 2 tbsp vinegar per liter and 150 mL brine. Don't drink it until the test turns pink.</p></div></div>
+    <div class="tr"><span class="pill warn">Fix</span><div><h3>Nail-polish or solvent smell</h3><p>The yeast is stressed from heat or waiting too long between feeds. Harvest, feed and move the jar somewhere cooler.</p></div></div>
+    <div class="tr"><span class="pill warn">Fix</span><div><h3>Thick, slimy or stringy liquid</h3><p>Some lactic bacteria do this and it usually clears in a few days. Throw it out if it also smells bad.</p></div></div>
+    <div class="tr"><span class="pill warn">Fix</span><div><h3>Bottles won't firm up in 48 hours</h3><p>Move them somewhere warmer, add ½ tsp sugar per 500 mL, use fresh skins in the jar and add more brine.</p></div></div>
+    <div class="tr"><span class="pill warn">Fix</span><div><h3>Bottles gush when opened</h3><p>Chill them earlier, at firm instead of hard, and keep them cold for 24 hours before opening. Open slowly over the sink.</p></div></div>
+    <div class="tr"><span class="pill warn">Fix</span><div><h3>Too sour or too salty</h3><p>If too sour, harvest more often and cut the vinegar in the feed to 1 tsp per liter. If too salty, leave the salt out of the next 2 feeds.</p></div></div>
+    <div class="tr"><span class="pill bad">Discard</span><div><h3>Fuzzy, raised or dry spots, or blue, green, black, pink or orange patches</h3><p>This is mold. Throw out everything, including the peels. Wash the jar with hot soapy water and restart. Skimming mold off doesn't make the rest safe.</p></div></div>
+    <div class="tr"><span class="pill bad">Discard</span><div><h3>Rotten, putrid or garbage smell, or a blue or green test</h3><p>Throw it out and restart with fresh brine.</p></div></div>
+  </div>
+  <div class="panel stack">
+    <h3>House rules</h3>
+    <ul class="clean">
+      <li>If you're unsure whether it's safe, throw it out. A new batch costs a few tea bags.</li>
+      <li>Wash your hands and use clean utensils. Never dip a used cup into the jar.</li>
+      <li>Use plastic, glass or stainless steel. Acid eats aluminum and copper.</li>
+      <li>Good smells are tart, fruity, bready and slightly like sauerkraut.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>Wild Peel Tonic, v2. Nutrition numbers are estimates. Brine strength and ingredients vary.</footer>
+</div>
+
+<script>
+(function(){
+  var per = [
+    ["hot water", 250, "mL"], ["cold water", 750, "mL"], ["black tea", 2, "bags"],
+    ["sugar", 1, "tbsp"], ["sugarcane vinegar", 1, "tbsp"], ["salt", 0.25, "tsp"]
+  ];
+  function frac(n){
+    var map = {0.125:"⅛",0.25:"¼",0.375:"⅜",0.5:"½",0.75:"¾"};
+    var w = Math.floor(n), r = +(n - w).toFixed(3);
+    if (r === 0) return String(w);
+    return (w ? w + " " : "") + (map[r] || r);
+  }
+  function render(l){
+    var out = per.map(function(p){
+      var v = p[1] * l;
+      var s = p[2] === "mL" ? Math.round(v) : frac(v);
+      return '<div><b>' + s + ' ' + p[2] + '</b><span>' + p[0] + '</span></div>';
+    }).join("");
+    document.getElementById("feed").innerHTML = out;
+    document.querySelectorAll(".seg button").forEach(function(b){
+      b.setAttribute("aria-pressed", String(+b.dataset.l === l));
+    });
+    try { localStorage.setItem("wpt-liters", String(l)); } catch(e){}
+  }
+  var start = 1;
+  try { var s = parseFloat(localStorage.getItem("wpt-liters")); if ([0.5,1,1.5,2].indexOf(s) > -1) start = s; } catch(e){}
+  document.querySelectorAll(".seg button").forEach(function(b){
+    b.addEventListener("click", function(){ render(+b.dataset.l); });
+  });
+  render(start);
+})();
+</script>
+
+<script>
+(function(){
+  var root=document.documentElement, KEY="wpt-reader";
+  var st={rm:0,fs:16,th:"auto"};
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||"{}");for(var k in saved)st[k]=saved[k];}catch(e){}
+  var hostTheme=root.getAttribute("data-theme");
+  function apply(){
+    root.classList.toggle("reading",!!st.rm);
+    root.style.setProperty("--fs",st.fs+"px");
+    if(st.th==="auto"){ if(hostTheme) root.setAttribute("data-theme",hostTheme); else root.removeAttribute("data-theme"); }
+    else root.setAttribute("data-theme",st.th);
+    document.getElementById("fs-val").textContent=Math.round(st.fs/16*100)+"%";
+    document.querySelectorAll("[data-rm]").forEach(function(b){b.setAttribute("aria-pressed",String(+b.dataset.rm===st.rm));});
+    document.querySelectorAll("[data-th]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.th===st.th));});
+    document.getElementById("aa").textContent=st.rm?"Aa Reading":"Aa Read";
+    try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}
+  }
+  var aa=document.getElementById("aa"), rp=document.getElementById("rp");
+  aa.addEventListener("click",function(){rp.hidden=!rp.hidden;aa.setAttribute("aria-expanded",String(!rp.hidden));});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!rp.hidden){rp.hidden=true;aa.setAttribute("aria-expanded","false");aa.focus();}});
+  document.querySelectorAll("[data-rm]").forEach(function(b){b.addEventListener("click",function(){st.rm=+b.dataset.rm;apply();});});
+  document.querySelectorAll("[data-th]").forEach(function(b){b.addEventListener("click",function(){st.th=b.dataset.th;apply();});});
+  document.getElementById("fs-down").addEventListener("click",function(){st.fs=Math.max(13,st.fs-1);apply();});
+  document.getElementById("fs-up").addEventListener("click",function(){st.fs=Math.min(24,st.fs+1);apply();});
+  apply();
+})();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); });
+}
+</script>
+</body>
+</html>
