@@ -1,5 +1,5 @@
-// Bump VERSION whenever any cached file changes so phones pick up the update.
-const VERSION = "wpt-v1";
+// The deploy workflow replaces VERSION with the commit hash so installed copies update.
+const VERSION = "wpt-dev";
 const FILES = [
   "./",
   "index.html",

@@ -125,6 +125,9 @@ td:first-child{font-weight:700}
 .pill.warn{background:var(--warn-bg);color:var(--warn)}
 .pill.bad{background:var(--bad-bg);color:var(--bad)}
 
+.verdicts.two-up{grid-template-columns:repeat(2,1fr)}
+@media (max-width:560px){.verdicts.two-up{grid-template-columns:1fr}}
+
 /* pH scale */
 .phscale{display:flex;flex-direction:column;gap:8px}
 .phbar{display:grid;grid-template-columns:repeat(5,1fr);border-radius:10px;overflow:hidden;height:46px}
@@ -206,7 +209,7 @@ html{scroll-behavior:smooth}
 
 <header class="hero">
   <div class="strip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
-  <span class="label">Perpetual home brew · version 2</span>
+  <span class="label">Perpetual home brew</span>
   <h1>Wild Peel Tonic</h1>
   <p class="lede">A fizzy, tart electrolyte drink for training. Made from black tea, cabbage brine and whatever fruit peels you have, it runs in one 5-liter jar and gives you a liter a day.</p>
   <div class="facts">
@@ -218,7 +221,7 @@ html{scroll-behavior:smooth}
 </header>
 
 <nav class="toc" aria-label="Sections">
-  <a href="#start">Start</a><a href="#daily">Daily cycle</a><a href="#flavors">Flavors</a><a href="#options">Swaps</a><a href="#yeast">Yeast?</a><a href="#kefir">Kefir drinks</a><a href="#workout">Workout</a><a href="#test">pH test</a><a href="#trouble">Troubleshooting</a><button type="button" class="aa" id="aa" aria-expanded="false" aria-controls="rp">Aa Read</button>
+  <a href="#why">Why</a><a href="#kraut">Starter kraut</a><a href="#start">Start</a><a href="#daily">Daily cycle</a><a href="#flavors">Flavors</a><a href="#options">Swaps</a><a href="#yeast">Yeast?</a><a href="#kefir">Kefir drinks</a><a href="#workout">Workout</a><a href="#test">pH test</a><a href="#trouble">Troubleshooting</a><button type="button" class="aa" id="aa" aria-expanded="false" aria-controls="rp">Aa Read</button>
 </nav>
 <div class="rp" id="rp" hidden>
   <div class="row"><strong>Reading mode</strong><div class="seg"><button type="button" id="rm-off" data-rm="0">Off</button><button type="button" id="rm-on" data-rm="1">On</button></div></div>
@@ -226,16 +229,26 @@ html{scroll-behavior:smooth}
   <div class="row"><strong>Theme</strong><div class="seg"><button type="button" id="th-auto" data-th="auto">Auto</button><button type="button" id="th-light" data-th="light">Light</button><button type="button" id="th-sepia" data-th="sepia">Sepia</button><button type="button" id="th-dark" data-th="dark">Dark</button></div></div>
 </div>
 
-<section id="changes">
-  <header><span class="label">What's new in v2</span><h2>Changes from the first version</h2></header>
-  <ul class="clean">
-    <li><strong>Brew 4 L, not 2 L.</strong> Taking out 1 L of 4 L a day (25%) keeps the culture and the acidity steady. Taking 1 L of 2 L halved them every day.</li>
-    <li><strong>Salt and vinegar go into every feed.</strong> Salt keeps the sodium level steady instead of fading out within a week. Vinegar keeps the brew acidic, which is what keeps it safe.</li>
-    <li><strong>Red-cabbage pH test</strong> in place of pH strips. You can make it from one cabbage leaf.</li>
-    <li><strong>Brew the feed tea as a concentrate</strong> so it's cool enough to add right away.</li>
-    <li><strong>Refrigerate bottles when firm, not rock-hard,</strong> so they don't gush when opened.</li>
-    <li><strong>Choose any peels.</strong> Apple, pineapple, ginger and more are in the flavor section. Mango peel now has a warning.</li>
-  </ul>
+<section id="why">
+  <header><span class="label">Why brew your own</span><h2>A sports drink with live cultures</h2>
+    <p class="muted">Store sports drinks replace the salt you lose in sweat, mostly with sugar and flavoring. This tonic replaces the same salt, adds live lactic-acid bacteria and costs about as much as a cup of tea.</p></header>
+  <div class="verdicts two-up">
+    <div class="verdict"><h3>More sodium, less sugar</h3><p>Sweat is mostly salt and water. The tonic has about 600 mg sodium per liter, more than most store drinks. The culture eats most of the 12 g of sugar per liter, so what's left is tart, not syrupy.</p></div>
+    <div class="verdict"><h3>Live cultures</h3><p>The sauerkraut brine brings lactic-acid bacteria, the same family found in yogurt and kefir. In a 2021 Stanford study, people who ate more fermented foods had a more diverse gut microbiome and lower inflammation markers.</p></div>
+    <div class="verdict"><h3>You control every ingredient</h3><p>Nothing goes in except tea, sugar, salt, vinegar and fruit. No dyes or sweeteners. Change the salt for hot days or the caffeine for evening sessions.</p></div>
+    <div class="verdict"><h3>Cheap, and it uses scraps</h3><p>A liter costs about 20–30 cents in tea bags, sugar, salt and vinegar. The flavor comes from peels you'd otherwise throw away.</p></div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Per liter</th><th>Wild Peel Tonic</th><th>Typical store sports drink</th><th>Water</th></tr></thead>
+    <tbody>
+      <tr><td>Sodium</td><td>~600 mg</td><td>~450 mg</td><td>almost none</td></tr>
+      <tr><td>Sugar</td><td>under 12 g</td><td>~55–60 g</td><td>0 g</td></tr>
+      <tr><td>Live cultures</td><td>Yes</td><td>No</td><td>No</td></tr>
+      <tr><td>Fizz</td><td>Natural</td><td>Usually flat</td><td>None</td></tr>
+      <tr><td>Cost</td><td>~$0.25</td><td>~$2–4</td><td>~$0</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">It's a home ferment, so it varies from batch to batch and the numbers here are estimates. For sessions longer than 90 minutes you also need carbs, so pair it with fruit or the <a href="#kefir">Recovery Lassi</a>.</p>
 </section>
 
 <section id="gear">
@@ -260,13 +273,54 @@ html{scroll-behavior:smooth}
   </div>
 </section>
 
+<section id="kraut">
+  <header><span class="label">Make the starter culture</span><h2>Fermented cabbage</h2>
+    <p class="muted">The brine from homemade sauerkraut starts the tonic and recharges it later. You need 500 mL to start and about 150 mL now and then. Choose the quick juice if you want brine in a few days, or full sauerkraut for brine and a side dish.</p></header>
+  <div class="two">
+    <div class="panel stack">
+      <span class="label">3–5 days · all liquid</span>
+      <h3>Quick cabbage juice</h3>
+      <div class="ing">
+        <div><span class="qty">3 cups</span><span>chopped green cabbage (about 300 g)</span></div>
+        <div><span class="qty">1 L</span><span>water</span></div>
+        <div><span class="qty">1½ tsp</span><span>salt (about 9 g)</span></div>
+      </div>
+      <ol class="steps">
+        <li><div>Pulse everything in a blender for a few seconds until the cabbage is in small bits, not a smooth purée.</div></li>
+        <li><div>Pour it into a clean jar and leave 3 cm of space at the top. Put the lid on loosely.</div></li>
+        <li><div>Leave it at room temperature for 3–5 days and stir once a day.</div></li>
+        <li><div>It's ready when it smells sour and pickle-like and turns the <a href="#test">test liquid</a> pink. Strain it, then keep the juice in the fridge for up to a month.</div></li>
+      </ol>
+    </div>
+    <div class="panel stack">
+      <span class="label">1–4 weeks · brine + sauerkraut</span>
+      <h3>Classic sauerkraut</h3>
+      <div class="ing">
+        <div><span class="qty">1 kg</span><span>green cabbage (1 medium head)</span></div>
+        <div><span class="qty">20 g</span><span>salt, 2% of the cabbage weight (about 1 heaped tbsp)</span></div>
+        <div><span class="qty">500 mL</span><span>extra 2% brine: 10 g salt dissolved in 500 mL water. This gives you more liquid for the tonic.</span></div>
+      </div>
+      <ol class="steps">
+        <li><div>Take off 2 clean outer leaves and set them aside. Quarter the cabbage, cut out the core and slice it thin.</div></li>
+        <li><div>Sprinkle on the salt and squeeze and massage it with your hands for 5–10 minutes, until it's limp and sitting in its own juice.</div></li>
+        <li><div>Pack it tightly into a jar and press it down hard. Pour in the juice from the bowl and the extra brine.</div></li>
+        <li><div>Cover the top with the saved leaves and weigh them down with a small water-filled jar or a zip bag of brine. <strong>Everything must stay under the liquid.</strong></div></li>
+        <li><div>Put the lid on loosely and keep the jar at 18–22 °C out of the sun. Press it down every day for the first few days.</div></li>
+        <li><div>Taste it after 1 week. When it's pleasantly sour, pour off the brine for the tonic and move the sauerkraut to the fridge to eat.</div></li>
+      </ol>
+    </div>
+  </div>
+  <div class="note"><strong>Tips.</strong> Use plain salt without iodine if you can find it, since iodized salt can make the brine cloudy. Weigh the salt rather than measuring by spoon: too little lets spoilage in, too much stalls the ferment. Red cabbage works too, but it turns the tonic pink and makes the pH test hard to read. Save 150 mL of old brine to start the next jar faster.</div>
+  <div class="note warn"><strong>Kraut safety:</strong> anything above the brine can spoil. If fuzzy or colored mold appears, throw out the jar. A flat white film is kahm yeast: skim it off and push the cabbage back under the brine.</div>
+</section>
+
 <section id="start">
   <header><span class="label">Day 0 · once</span><h2>Starter batch (4 liters)</h2></header>
   <div class="panel ing">
     <div><span class="qty">3.5 L</span><span>water</span></div>
     <div><span class="qty">7 bags</span><span>black tea</span></div>
     <div><span class="qty">4 tbsp</span><span>white sugar (about 50 g)</span></div>
-    <div><span class="qty">500 mL</span><span>live cabbage brine, from homemade or refrigerated unpasteurized sauerkraut. Shelf-stable jars are pasteurized, so the bacteria in them are dead.</span></div>
+    <div><span class="qty">500 mL</span><span>live cabbage brine, from <a href="#kraut">homemade sauerkraut</a> or refrigerated unpasteurized sauerkraut. Shelf-stable jars are pasteurized, so the bacteria in them are dead.</span></div>
     <div><span class="qty">4 tbsp</span><span>sugarcane vinegar, 4–5% acidity (¼ cup)</span></div>
     <div><span class="qty">1 set</span><span>peels from a <a href="#flavors">flavor combo</a></span></div>
   </div>
@@ -339,7 +393,7 @@ html{scroll-behavior:smooth}
     <article class="combo"><h3>Garden Cooler</h3><p class="fizz">fizz <i>●●○○</i></p><dl><dt>Jar</dt><dd>Lime zest strips, peel of ½ cucumber</dd><dt>Bottle</dt><dd>3 mint leaves, 2 cucumber slices</dd></dl></article>
     <article class="combo"><h3>Berry Red</h3><p class="fizz">fizz <i>●●●○</i></p><dl><dt>Jar</dt><dd>A handful of red grapes, lightly crushed, or apple peel</dd><dt>Bottle</dt><dd>3 frozen berries or a pinch of dried hibiscus. Keep hibiscus out of the jar, because its red color ruins the pH test.</dd></dl></article>
     <article class="combo"><h3>Pear & Spice</h3><p class="fizz">fizz <i>●●○○</i></p><dl><dt>Jar</dt><dd>Peel of 1–2 pears, 2 cardamom pods, cracked</dd><dt>Bottle</dt><dd>Small pinch of cinnamon</dd></dl></article>
-    <article class="combo"><h3>Tropical (original)</h3><p class="fizz">fizz <i>●●○○</i></p><dl><dt>Jar</dt><dd>Mango peel, 1 mandarin peel, lemon zest</dd><dt>Bottle</dt><dd>1 tbsp mango purée</dd></dl><p class="muted" style="font-size:.85rem">Mango skin contains urushiol, the irritant in poison ivy. Skip it if mango skin or poison ivy makes your skin react.</p></article>
+    <article class="combo"><h3>Tropical</h3><p class="fizz">fizz <i>●●○○</i></p><dl><dt>Jar</dt><dd>Mango peel, 1 mandarin peel, lemon zest</dd><dt>Bottle</dt><dd>1 tbsp mango purée</dd></dl><p class="muted" style="font-size:.85rem">Mango skin contains urushiol, the irritant in poison ivy. Skip it if mango skin or poison ivy makes your skin react.</p></article>
   </div>
   <div class="note warn"><strong>Keep these out of the jar:</strong> moldy or bruised fruit, waxed citrus unless scrubbed in hot water (buy organic if you can), crushed fruit pits or seeds, rhubarb leaves, and anything sprayed or from the roadside.</div>
 </section>
@@ -445,7 +499,7 @@ html{scroll-behavior:smooth}
   </div>
 </section>
 
-<footer>Wild Peel Tonic, v2. Nutrition numbers are estimates. Brine strength and ingredients vary.</footer>
+<footer>Wild Peel Tonic. Nutrition numbers are estimates. Brine strength and ingredients vary.</footer>
 </div>
 
 <script>

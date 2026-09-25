@@ -8,12 +8,14 @@ Static site, no build step. Installable as an offline app (manifest + service wo
 
 ## Deploy
 
-Deploys to Cloudflare Pages project `perpetual-home-brew`. Upload only the site files, not `.git`:
+Every push to `main` deploys to the Cloudflare Pages project `perpetual-home-brew` through `.github/workflows/deploy.yml`. The workflow stamps `sw.js` with the commit hash, so installed copies pick up the new version on their next online visit.
+
+The repo needs two Actions secrets: `CLOUDFLARE_API_TOKEN` (with Cloudflare Pages: Edit permission) and `CLOUDFLARE_ACCOUNT_ID`.
+
+To deploy by hand without GitHub:
 
 ```bash
 rm -rf /tmp/phb && mkdir /tmp/phb
 git archive HEAD index.html sw.js manifest.webmanifest fonts icons | tar -x -C /tmp/phb
 npx wrangler pages deploy /tmp/phb --project-name perpetual-home-brew --branch main
 ```
-
-When you change any file, bump `VERSION` in `sw.js` so installed copies update.
