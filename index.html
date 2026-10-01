@@ -673,14 +673,14 @@ html{scroll-behavior:smooth}
       return '<div><b>' + s + ' ' + p[2] + '</b><span>' + p[0] + '</span></div>';
     }).join("");
     document.getElementById("feed").innerHTML = out;
-    document.querySelectorAll(".seg button").forEach(function(b){
+    document.querySelectorAll(".seg button[data-l]").forEach(function(b){
       b.setAttribute("aria-pressed", String(+b.dataset.l === l));
     });
     try { localStorage.setItem("wpt-liters", String(l)); } catch(e){}
   }
   var start = 1;
   try { var s = parseFloat(localStorage.getItem("wpt-liters")); if ([0.5,1,1.5,2].indexOf(s) > -1) start = s; } catch(e){}
-  document.querySelectorAll(".seg button").forEach(function(b){
+  document.querySelectorAll(".seg button[data-l]").forEach(function(b){
     b.addEventListener("click", function(){ render(+b.dataset.l); });
   });
   render(start);
